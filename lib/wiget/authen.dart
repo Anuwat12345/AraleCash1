@@ -107,10 +107,17 @@ class _AuthenState extends State<Authen> {
             suffixIcon:
                 Icon(Icons.account_box, color: Colors.pink), //color of icon
             labelText: 'User',
+
+
+            
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.pink),
               borderRadius: BorderRadius.circular(35),
             ),
+
+
+
+
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),
               borderSide: BorderSide(color: Colors.black),

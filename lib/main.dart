@@ -10,5 +10,7 @@ class MyApp extends StatelessWidget {
       home: Authen(),
       title: 'Arale Cash', //Add 'title' to app
     ); //Area for design...Appear on screen
+
+    
   }
 }
