@@ -17,6 +17,13 @@ class Authen extends StatefulWidget {
 class _AuthenState extends State<Authen> {
   String user, password;
 
+  @override // ให้ทำงาน ก่อน Build
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,22 +86,30 @@ class _AuthenState extends State<Authen> {
           UserModel model = UserModel.fromJson(map);
           if (password == model.password) {
 // สร้าง SharedPreforence เพื่อให้ Appl จำค่าที่เคย Login ไว้แล้วไม่ต้อง Login ใหม่เหมือนกับ Facebook
- 
+
 // SharedPreferences preferences = a
 
-///////////
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Cash(userModel: model,),
-                ),
-                (route) => false);
+//
+            savePreference();
+            // iRouteToService(model);
           } else {
             normalDialog(context, 'Password fail ;w;');
           }
         }
       }
     }).catchError(() {});
+  }
+
+// void iRouteToService(UserModel model) {
+  void iRouteToService() {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Cash(),
+          //   userModel: model,  // ใช้ User Model
+          // ),
+        ),
+        (route) => false);
   }
 
   Widget buildTextFieldUser() => Container(
@@ -108,15 +123,10 @@ class _AuthenState extends State<Authen> {
                 Icon(Icons.account_box, color: Colors.pink), //color of icon
             labelText: 'User',
 
-
-            
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.pink),
               borderRadius: BorderRadius.circular(35),
             ),
-
-
-
 
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),
@@ -158,5 +168,26 @@ class _AuthenState extends State<Authen> {
       width: 120,
       child: Image.asset('images/login_logo.jpg'),
     );
+  }
+
+  Future<Null> savePreference() async {
+    SharedPreferences preference = await SharedPreferences
+        .getInstance(); // เก็บค่าฝังไว้ในเครื่อง เช่น Username Password
+
+    preference.setString('Username', user); // ค่าที่จะเก็บ
+    iRouteToService();
+  }
+
+  Future<Null> checkStatus() async {
+    try {
+SharedPreferences preferences = await SharedPreferences.getInstance();
+String user = preferences.getString('Username');
+if (user.isNotEmpty ) {
+  iRouteToService();
+ // print('Login ///////////////////');
+}
+
+
+    } catch (e) {}
   }
 }

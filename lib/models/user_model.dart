@@ -11,8 +11,6 @@ class UserModel {
     fullname = json['Fullname'];
     username = json['Username'];
     password = json['password'];
-
-    
   }
 
   Map<String, dynamic> toJson() {
